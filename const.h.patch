@@ -1,0 +1,30 @@
+--- const.h	2019-01-25 16:48:02.846983858 +0900
++++ const.h.newer	2019-01-25 17:11:09.510251245 +0900
+@@ -24,13 +24,13 @@
+ /*====================================================================
+ 				LENGTH
+ ====================================================================*/
+-#define	MRPH_MAX	200
+-#define	BNST_MAX	200 /* 日本語の場合は64ぐらいで十分 */
++#define	MRPH_MAX	500
++#define	BNST_MAX	500 /* 日本語の場合は64ぐらいで十分 */
+ #define	BNST_LENGTH_MAX	256
+-#define	TAG_MAX		200
++#define	TAG_MAX		500
+ #define	PAREN_MAX	100
+-#define	PARA_MAX	32
+-#define PARA_PART_MAX	32
++#define	PARA_MAX	64
++#define PARA_PART_MAX	64
+ #define WORD_LEN_MAX	128
+ #define REPNAME_LEN_MAX	256
+ #define CF_ID_LEN_MAX	280
+@@ -460,7 +460,7 @@ typedef struct {
+     char		dpnd_type;
+ } KoouRule;
+ 
+-#define QUOTE_MAX 40
++#define QUOTE_MAX 80
+ 
+ typedef struct {
+     int in_num[QUOTE_MAX];
