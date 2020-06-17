@@ -9,13 +9,19 @@ Stored applications is listed below.
 
 MeCab
 -----
+Fast morphology analyzer.
+This image set jumandic as a dictionary.
 
 KNP
 ---
+Syntax analyzer. Setting Juman++ dictionary as a dict.
+And have larger the limitation morphology size.
 
 Juman
 -----
+Morphology analyzer.
 
 Juman++
 -------
-
+Morphology analyzer.
+Fast version of Juman.
