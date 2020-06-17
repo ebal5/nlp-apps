@@ -70,7 +70,6 @@ RUN set -ex ;\
   tar xJf "jumanpp-1.02.tar.xz" -C /usr/local/src ; \
   cd /usr/local/src/jumanpp-1.02 \
   && ./configure --prefix=/usr/local > /dev/null && make > /dev/null && make install ; \
-  jumanpp --help ; \
   # Download juman 7.01 and make it
   cd /root ; \
   curl -C - -sLJ -o "juman-7.01.tar.bz2" "http://nlp.ist.i.kyoto-u.ac.jp/DLcounter/lime.cgi?down=http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/juman/juman-7.01.tar.bz2&name=juman-7.01.tar.bz2" ; \
@@ -80,7 +79,7 @@ RUN set -ex ;\
   cd /usr/local/src/juman-7.01 ; cp /usr/local/src/jumanpp-1.02/dict-build/grammar/* ./dic/ ; \
   sed -ie 's/6000/6100/' makemat/makemat.c \
   && ./configure --prefix=/usr/local && make && make install ; \
-  juman --help && rm -rf /usr/local/src/juman-7.01 ; \
+  rm -rf /usr/local/src/juman-7.01 ; \
   rm -rf /usr/local/src/jumanpp-1.02 ; \
   # Download knp 4.19 and make it
   cd /root ;\
@@ -92,5 +91,4 @@ RUN set -ex ;\
   && patch system/const.h /const.h.patch \
   && rm /const.h.patch \
   && ./configure --prefix=/usr/local --with-juman-prefix=/usr/local && make && make install ; \
-  knp --help ; \
   rm -rf /usr/local/src/knp-4.19
