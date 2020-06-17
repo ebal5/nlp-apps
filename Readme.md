@@ -24,3 +24,4 @@ Morphology analyzer.
 Juman++
 -------
 Morphology analyzer.
+Fast version of Juman.

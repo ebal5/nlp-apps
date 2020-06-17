@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Delete old images
-      run: docker image prune --force; docker rm $(docker ps -aq); docker rmi $(docker images -q)
+      run: docker image prune --force; docker rmi $(docker images -q)
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ebal5/nlp-apps:$(date +%s)
