@@ -55,7 +55,7 @@ RUN set -ex ;\
   curl -sLJ "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE" | tar zxf - -C /usr/local/src ; \
   # Download mecab jumandic and extract it to /usr/local/src
   curl -sc /tmp/cookie "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7X2pESGlLREpxdXM" > /dev/null ; \
-  CODE="$(awk '/_warning_/ {print $NF}' /tmp/cookie)" curl -sLJb /tmp/cookie "https://drive.google.com/uc?export=download&confirm=$(awk '/_warning_/ {print $NF}' /tmp/cookie)&id=0B4y35FiV1wh7X2pESGlLREpxdXM" | tar zxf - -C /usr/local/src ; \
+  curl -sLJb /tmp/cookie "https://drive.google.com/uc?export=download&confirm=$(awk '/_warning_/ {print $NF}' /tmp/cookie)&id=0B4y35FiV1wh7X2pESGlLREpxdXM" | tar zxf - -C /usr/local/src ; \
   rm /tmp/cookie ; \
   cd /usr/local/src/mecab-0.996 \
   && ./configure --prefix=/usr/local > /dev/null && make > /dev/null && make check && make install ; \
@@ -70,7 +70,7 @@ RUN set -ex ;\
   tar xJf "jumanpp-1.02.tar.xz" -C /usr/local/src ; \
   cd /usr/local/src/jumanpp-1.02 \
   && ./configure --prefix=/usr/local > /dev/null && make > /dev/null && make install ; \
-  jumanpp --help && rm -rf /usr/local/src/jumanpp-1.02 ; \
+  jumanpp --help ; \
   # Download juman 7.01 and make it
   cd /root ; \
   curl -C - -sLJ -o "juman-7.01.tar.bz2" "http://nlp.ist.i.kyoto-u.ac.jp/DLcounter/lime.cgi?down=http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/juman/juman-7.01.tar.bz2&name=juman-7.01.tar.bz2" ; \
@@ -81,6 +81,7 @@ RUN set -ex ;\
   sed -ie 's/6000/6100/' makemat/makemat.c \
   && ./configure --prefix=/usr/local && make && make install ; \
   juman --help && rm -rf /usr/local/src/juman-7.01 ; \
+  rm -rf /usr/local/src/jumanpp-1.02 ; \
   # Download knp 4.19 and make it
   cd /root ;\
   curl -C - -sLJ -o "knp-4.19.tar.bz2" "http://nlp.ist.i.kyoto-u.ac.jp/DLcounter/lime.cgi?down=http://nlp.ist.i.kyoto-u.ac.jp/nl-resource/knp/knp-4.19.tar.bz2&name=knp-4.19.tar.bz2" ; \
@@ -92,4 +93,4 @@ RUN set -ex ;\
   && rm /const.h.patch \
   && ./configure --prefix=/usr/local --with-juman-prefix=/usr/local && make && make install ; \
   knp --help \
-  && rm -rf /usr/local/src/knp-4.19
+  && rm -rf /usr/local/src/knp-4.19 ; \
