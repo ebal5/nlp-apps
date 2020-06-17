@@ -92,5 +92,5 @@ RUN set -ex ;\
   && patch system/const.h /const.h.patch \
   && rm /const.h.patch \
   && ./configure --prefix=/usr/local --with-juman-prefix=/usr/local && make && make install ; \
-  knp --help \
-  && rm -rf /usr/local/src/knp-4.19 ; \
+  knp --help ; \
+  rm -rf /usr/local/src/knp-4.19
