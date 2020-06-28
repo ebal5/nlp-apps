@@ -1,56 +1,58 @@
-FROM alpine:latest
+FROM alpine:3.12.0
 
 ENV PATH=/usr/local/bin:$PATH
 ENV LANG=C.UTF-8
+ENV SHELL=/bin/ash
 
 RUN set -ex ;\
   apk update ;\
-  apk add --no-cache ca-certificates && \
+  apk add --no-cache ca-certificates=20191127-r4 && \
   apk add --no-cache --virtual .fetch-deps && \
   apk add --no-cache --virtual .build-deps \
-  boost \
-  boost-dev \
-  bzip2-dev \
-  cmake \
-  coreutils \
-  curl \
-  dpkg-dev dpkg \
-  expat-dev \
-  file \
-  findutils \
-  g++ \
-  gcc \
-  gdbm-dev \
-  gnupg \
-  libc-dev \
-  libffi-dev \
-  libnsl-dev \
-  libstdc++ \
-  libtirpc-dev \
-  linux-headers \
-  make \
-  ncurses-dev \
-  openssl-dev \
-  patch \
-  pax-utils \
-  readline-dev \
-  sqlite-dev \
-  tar \
-  tcl-dev \
-  tk \
-  tk-dev \
-  util-linux-dev \
-  xz \
-  xz-dev \
-  zlib-dev \
-  # add build deps before removing fetch deps in case there's overlap
+  boost=1.72.0-r6 \
+  boost-dev=1.72.0-r6 \
+  bzip2-dev=1.0.8-r1 \
+  cmake=3.17.2-r0 \
+  coreutils=8.32-r0 \
+  curl=7.69.1-r0 \
+  dpkg-dev=1.20.0-r0 dpkg=1.20.0-r0 \
+  expat-dev=2.2.9-r1 \
+  file=5.38-r0 \
+  findutils=4.7.0-r0 \
+  g++=9.3.0-r2 \
+  gcc=9.3.0-r2 \
+  gdbm-dev=1.13-r1 \
+  gnupg=2.2.20-r0 \
+  libc-dev=0.7.2-r3 \
+  libffi-dev=3.3-r2 \
+  libnsl-dev=1.2.0-r1 \
+  libstdc++=9.3.0-r2 \
+  libtirpc-dev=1.2.6-r0 \
+  linux-headers=5.4.5-r1 \
+  make=4.3-r0 \
+  ncurses-dev=6.2_p20200523-r0 \
+  openssl-dev=1.1.1g-r0 \
+  patch=2.7.6-r6 \
+  # pax-utils=1.2.6-r6 \
+  readline-dev=8.0.4-r0 \
+  ruby=2.7.1-r3 ruby-dev=2.7.1-r3 \
+  sqlite-dev=3.32.1-r0 \
+  tar=1.32-r1 \
+  tcl-dev=8.6.10-r0 \
+  tk=8.6.10-r1 \
+  tk-dev=8.6.10-r1 \
+  util-linux-dev=2.35.2-r0 \
+  xz=5.2.5-r0 \
+  xz-dev=5.2.5-r0 \
+  zlib-dev=1.2.11-r3 \
   && apk del .fetch-deps ; \
   mkdir /usr/local/src
 
-COPY const.h.patch /
 
-RUN set -ex ;\
-  apk add --no-cache ruby ruby-dev ; \
+WORKDIR /usr/local/src
+COPY const.h.patch .
+# hadolint ignore=SC2039,DL4006
+RUN set -ex -o pipefail ;\
   # Download mecab and extract it to /usr/local/src
   curl -sLJ "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE" | tar zxf - -C /usr/local/src ; \
   # Download mecab jumandic and extract it to /usr/local/src
@@ -88,7 +90,7 @@ RUN set -ex ;\
   tar xjf "knp-4.19.tar.bz2" -C /usr/local/src ; \
   rm -f knp-4.19.tar.bz2 ; \
   cd /usr/local/src/knp-4.19 \
-  && patch system/const.h /const.h.patch \
-  && rm /const.h.patch \
+  && patch system/const.h /usr/local/src/const.h.patch \
+  && rm /usr/local/src/const.h.patch \
   && ./configure --prefix=/usr/local --with-juman-prefix=/usr/local && make && make install ; \
   rm -rf /usr/local/src/knp-4.19
